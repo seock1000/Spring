@@ -6,10 +6,13 @@ import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+// lombok 기능, 필수인(=final이 붙은) 필드의 생성자 자동 생성
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final MemberRepository memberRepository;
@@ -58,6 +61,7 @@ public class OrderServiceImpl implements OrderService {
     }
     **/
 
+    /**
     // 생성자 주입(가장 많이 사용)
     // 불변 : 생성자는 두 번 호출될 수 없기 때문에 값이 변하면 안되는 경우에 사용
     // 필수 : 생성자 파라미터는 일반적으로 필수 값, 문서에 null 허용이라고 명시되지 않은 경우에는 관례적으로 생성자에 값은 다 전달함
@@ -68,6 +72,8 @@ public class OrderServiceImpl implements OrderService {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
+     **/
+
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
