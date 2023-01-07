@@ -2,10 +2,7 @@ package hello.core;
 
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.*;
 
 @Configuration
 // @Component 어노테이션이 붙은 클래스 자동으로 스캔해서 스프링 빈으로 등록해주는 어노테이션
