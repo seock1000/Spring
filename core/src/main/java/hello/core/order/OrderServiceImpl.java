@@ -18,6 +18,51 @@ public class OrderServiceImpl implements OrderService {
     //private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
     private final DiscountPolicy discountPolicy;
 
+    /**
+    // 일반 메서드 주입
+    // 아무 일반 메서드에나 지정
+    // 수정자 주입이랑 다를게 거의 없음 -> 그래서 거의 사용 X
+    @Autowired
+    public void init(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+    **/
+
+    /**
+    // 필드 주입
+    // 필드를 Autowired로 지정하여 주입
+    // 코드는 간결하나 테스트 등에서 순수 자바로 사용이 어려움
+    // ex) 순수자바로는 OrderService os = new OrderServiceImpl(); 같이만 사용 가능.
+    // DI 컨테이너 없이는 테스트 자체가 불가 -> 순수한 테스트 불가
+    // 일반적으로는 사용 권장 X, 테스트 코드 정도에서 사용 권장
+    // @SpringBootTest 또는 @Configuration에서 임시로 사용하는 경우는 사용해도 괜찮을 듯
+    @Autowired private final MemberRepository memberRepository;
+    @Autowired  private final DiscountPolicy discountPolicy;
+    **/
+
+    /**
+    // 수정자 주입(setter로 주입)
+    // 생성자 주입과 동시에 있으면 생성자 주입은 빈 등록과정에서 의존관계 주입이 일어나기 때문에 수정자 주입이 그 이후에 일어남
+    // 필드에서 final 떼야함
+    // 선택 : 선택적으로 의존관계 주입하는 경우, @Autowired(required = false)
+    // 변경 : 변경 가능성이 있는 경우
+    @Autowired
+    public void setMemberRepository(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+    @Autowired
+    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+        this.discountPolicy = discountPolicy;
+    }
+    **/
+
+    // 생성자 주입(가장 많이 사용)
+    // 불변 : 생성자는 두 번 호출될 수 없기 때문에 값이 변하면 안되는 경우에 사용
+    // 필수 : 생성자 파라미터는 일반적으로 필수 값, 문서에 null 허용이라고 명시되지 않은 경우에는 관례적으로 생성자에 값은 다 전달함
+    // 생성자가 하나만 있을 때는 @Autowired 생략 가능 - 스프링이 자동으로 인지하고 생성자에 주입
+    // 다른 주입의 경우에는 스프링 컨테이너 Life Cycle이 빈 등록, 의존관계 주입 두 단계로 나뉘지만, 생성자 주입은 생성자에 대해 의존관계를 주입하기 때문에 빈 등록과 의존관계 주입이 함께 발생함
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
