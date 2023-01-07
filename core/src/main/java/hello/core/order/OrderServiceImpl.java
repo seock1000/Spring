@@ -1,5 +1,6 @@
 package hello.core.order;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.discount.DiscountPolicy;
 import hello.core.discount.FixDiscountPolicy;
 import hello.core.discount.RateDiscountPolicy;
@@ -68,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
     // 생성자가 하나만 있을 때는 @Autowired 생략 가능 - 스프링이 자동으로 인지하고 생성자에 주입
     // 다른 주입의 경우에는 스프링 컨테이너 Life Cycle이 빈 등록, 의존관계 주입 두 단계로 나뉘지만, 생성자 주입은 생성자에 대해 의존관계를 주입하기 때문에 빈 등록과 의존관계 주입이 함께 발생함
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    public OrderServiceImpl(MemberRepository memberRepository,DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
@@ -90,6 +91,15 @@ public class OrderServiceImpl implements OrderService {
      @Autowired
      public OrderServiceImpl(MemberRepository memberRepository,
         @Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+     this.memberRepository = memberRepository;
+     this.discountPolicy = discountPolicy;
+     }
+
+        // 2 - 1
+        // @Qualifier 사용하여 매칭되는 빈 등록
+     @Autowired
+     public OrderServiceImpl(MemberRepository memberRepository,
+     @MainDiscountPolicy DiscountPolicy discountPolicy) { // 커스텀 어노테이션으로 대체, 컴파일 시 에러 체크 가능
      this.memberRepository = memberRepository;
      this.discountPolicy = discountPolicy;
      }

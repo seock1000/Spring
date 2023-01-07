@@ -1,5 +1,6 @@
 package hello.core.discount;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.member.Grade;
 import hello.core.member.Member;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Primary // 자주 사용
 // ex) main DB와 보조 DB가 있을 때, main DB 사용률이 훨씬 많은 경우 -> main DB primary, 보조 DB Qualifier
 // @Qualifier("mainDiscountPolicy") // 빈에 특별한 이름 부여
+// @MainDiscountPolicy // @Qualifier("mainDiscountPolicy")를 컴파일 타임에 체크하기 쉽도록 커스텀 어노테이션으로 제작
 public class RateDiscountPolicy implements DiscountPolicy {
 
     private int discountPercent = 10;
