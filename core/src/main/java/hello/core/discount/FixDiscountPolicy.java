@@ -2,7 +2,11 @@ package hello.core.discount;
 
 import hello.core.member.Grade;
 import hello.core.member.Member;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component
+// @Qualifier("fixDiscountPolicy") // 빈에 특별한 이름 부여
 public class FixDiscountPolicy implements DiscountPolicy {
 
     private int discountFixAmount = 1000; // 할인 금액 1000원

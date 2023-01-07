@@ -39,6 +39,7 @@ public class AutoAppConfig {
         // 최근 스프링은 이러한 경우도 디폴트 값에 오류로 정의
         // 굳이 오버라이드 하고 싶다면 application.properties에 spring.main.allow-bean-definition-overriding=true 설정 추가
         /**
+         * 에러 : memoryMemberRepository 중복, 오버라이드 하고 싶다면 따로 설정 부여
         @Bean(name = "memoryMemberRepository")
         MemberRepository memberRepository() {
                 return new MemoryMemberRepository();
